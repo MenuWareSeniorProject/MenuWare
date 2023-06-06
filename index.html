@@ -1,0 +1,95 @@
+<?php include('header.php'); ?>
+
+<!-- Banner -->
+<div class="search_container_block main_search_block" data-background-image="images/single-listing-02.jpg">
+	<div class="main_inner_search_block">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h2>Sana uygun restoranı bul</h2>
+					<h4>Restoranı bul, yer ayırt</h4>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="fullwidth_block search_categorie_block">	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="headline_part centered margin-top-75 margin-bottom-45">Restoranlarımız </h3>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-12">
+		<div class="container"> 
+			<div class="row">
+				<?php 
+				$veriCek=$conn->prepare("SELECT * FROM restoran ORDER BY rest_tarih DESC ");
+				$veriCek->execute();
+				while ($var=$veriCek->fetch(PDO::FETCH_ASSOC)) {
+
+					$restoran = $var['rest_id'];
+					$menu_sayi = $conn->query("SELECT count(*) AS toplam FROM menuler WHERE menu_rest_id = '{$restoran}'")->fetch(PDO::FETCH_ASSOC);
+
+					?>
+					<div class="col-md-3 col-sm-6 col-xs-12">
+						<div class="category_container_item_part"> 
+							<a href="restoran.php?id=<?=$var['rest_id']; ?>" class="category_item_box"> 
+								<img src="<?=$var['rest_bg']; ?>" alt="" width="250px" height="150px" style="object-fit: cover;"/> 
+								<div class="category_content_box_part">
+									<h3><?=$var['rest_adi']; ?></h3>
+									<span><?=$menu_sayi['toplam']; ?> Menü</span> 
+								</div>
+							</a> 
+						</div>
+					</div>
+
+				<?php } ?>
+				
+			</div>
+		</div>
+	</div>
+</div> 	
+<div class="clearfix"></div>
+
+
+
+
+
+<section class="utf_testimonial_part fullwidth_block padding-top-75 padding-bottom-75"> 
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 col-md-offset-2">
+				<h3 class="headline_part centered"> Müşterilerimizin Yorumları </h3>
+			</div>
+		</div>
+	</div>
+	<div class="fullwidth_carousel_container_block margin-top-20">
+		<div class="utf_testimonial_carousel testimonials"> 
+			<div class="utf_carousel_review_part">
+				<div class="utf_testimonial_box">
+					<div class="testimonial">Okadar çok müsterilerine rağmen herkesle ayni derecede alakadar olup güzel hizmet ediliyor. Başta sahibi Yusuf beyi tebrik ederim, kendisi bizzat is yeri sahibi olmasina ragmen, garson kiyafeti giyip çalışan bir insanın işyerinde çalışanlarıda tabiki güzel çalışıp hizmet ediyorlar</div>
+				</div>
+				<div class="utf_testimonial_author"> <img src="images/happy-client-01.jpg" alt="">
+					<h4>Gürbüz Delgeç</h4>
+				</div>
+			</div>
+			<div class="utf_carousel_review_part">
+				<div class="utf_testimonial_box">
+					<div class="testimonial">Ailecek beğenerek gittiğimiz, fiyatları da muadillerine göre uygun olan mekan.
+					</div>
+				</div>
+				<div class="utf_testimonial_author"> <img src="images/happy-client-02.jpg" alt="">
+					<h4>Mahsun Lale</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<?php include('footer.php'); ?>
